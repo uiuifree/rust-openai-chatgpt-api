@@ -1,5 +1,9 @@
 # ChatGPT API Rust Library
 
+![Crates.io](https://img.shields.io/crates/v/openai_chatgpt_api?style=flat-square)
+![GitHub](https://img.shields.io/github/license/openai-rs/openai-api?style=flat-square)
+
+
 ## Overview
 
 This Rust library provides a simple and efficient way to interact with the ChatGPT API, which is a state-of-the-art NLP
