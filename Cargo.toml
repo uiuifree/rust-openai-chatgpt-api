@@ -4,7 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
+authors = ["uiuifree"]
+description = "OpenAI ChatGPT API"
+license = "MIT"
 [dependencies]
 reqwest = { version = "0.11.10", features = ["json", "multipart"] }
 
