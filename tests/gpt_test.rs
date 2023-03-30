@@ -9,7 +9,8 @@ fn get_client() -> ChatGpt {
 #[tokio::test]
 async fn test_model() {
     let gpt = get_client();
-    let a = gpt.models_list().await;
+    let a = gpt.models_list().await.unwrap();
+    a.to_value();
     // let a = gpt.completions_create("text-davinci-003").await;
     a.clone().unwrap().to_value();
     dbg!(a);

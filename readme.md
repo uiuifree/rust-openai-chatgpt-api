@@ -17,13 +17,32 @@ Rust-based projects.
 - Provides responses in multiple formats, including text and JSON.
 - Supports multiple endpoints and response languages.
 
+  |API|Support|
+  |---|---|
+  |Models|✔️|
+  |Completions|✔️|
+  |Chat|✔️|
+  |Edits|✔️|
+  |Images|✔️|
+  |Embeddings|✔️|
+  |Audio|✔️|
+___
+
+
+## Getting Started
+To get started, you will need an API key from OpenAI. You can obtain an API key by visiting the [OpenAI API page](https://platform.openai.com/docs/api-reference/authentication) and following the instructions there.
+
+Once you have an API key, you can install the library using Cargo:
+
+
+
 ## Installation
 
 To use this library, add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-openai_chatgpt_api = "0.1.0"
+openai_chatgpt_api = "0.1"
 ```
 
 Then, add the following to your Rust code:
@@ -59,11 +78,25 @@ let chatgpt = ChatGpt::new("YOUR_API_KEY_HERE");
 
 Replace `"YOUR_API_KEY_HERE"` with your actual API key.
 
+### Models List
+Here is an example of how to use the models_list method to retrieve a list of all available models:
+
+```rust
+let models = chatgpt.models_list().await.unwrap();
+let value = models.to_value();
+```
+
+### Models Retrieve
+
+```rust
+let model = .models_retrieve("text-davinci-003").await;
+let value = model.to_value();
+```
+
 ### Chatting
 Here is an example of how to use the library to chat with the ChatGPT API:
 
 ```rust
-use openai_chatgpt_api::ChatGPT;
 let request = ChatGptRequestChatCompletions::new(
     "gpt-3.5-turbo",
     vec![
@@ -75,3 +108,11 @@ let request = ChatGptRequestChatCompletions::new(
 let res = chatgpt.chat_completions(&request).await.unwrap();
 println!("{:?}", response.to_value());
 ```
+
+
+
+## Contributing
+Pull requests are welcome! If you have any questions or issues, please open an issue on the [GitHub repository](https://github.com/uiuifree/rust-openai-chatgpt-api).
+
+## License
+This library is licensed under the MIT License. See the LICENSE file for details.
