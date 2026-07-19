@@ -1,5 +1,6 @@
 # openai_chatgpt_api — OpenAI API client for Rust
 
+[![CI](https://img.shields.io/github/actions/workflow/status/uiuifree/rust-openai-chatgpt-api/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/uiuifree/rust-openai-chatgpt-api/actions/workflows/ci.yml)
 [![crates.io](https://img.shields.io/crates/v/openai_chatgpt_api?style=flat-square)](https://crates.io/crates/openai_chatgpt_api)
 [![docs.rs](https://img.shields.io/docsrs/openai_chatgpt_api?style=flat-square)](https://docs.rs/openai_chatgpt_api)
 [![license](https://img.shields.io/crates/l/openai_chatgpt_api?style=flat-square)](LICENSE)
