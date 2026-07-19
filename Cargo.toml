@@ -1,18 +1,26 @@
 [package]
 name = "openai_chatgpt_api"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+rust-version = "1.85"
 authors = ["uiuifree"]
-description = "OpenAI ChatGPT API"
+description = "Typed async Rust client for the OpenAI API: Responses API, Chat Completions, Embeddings, Images (gpt-image), Audio (TTS/STT), Moderations, and Models — with SSE streaming, Structured Outputs, and function calling"
 license = "MIT"
-[dependencies]
-reqwest = { version = "0.11.10", features = ["json", "multipart"] }
+repository = "https://github.com/uiuifree/rust-openai-chatgpt-api"
+documentation = "https://docs.rs/openai_chatgpt_api"
+homepage = "https://github.com/uiuifree/rust-openai-chatgpt-api"
+readme = "README.md"
+keywords = ["openai", "chatgpt", "gpt", "llm", "ai"]
+categories = ["api-bindings", "web-programming::http-client"]
 
-# Json
-serde = { version = "1.0" }
+[dependencies]
+reqwest = { version = "0.13", features = ["json", "multipart", "stream"] }
+serde = { version = "1.0.174", features = ["derive"] }
 serde_json = "1.0"
-serde_derive = "1.0"
+thiserror = "2.0"
+futures-util = "0.3"
+async-stream = "0.3"
+
 [dev-dependencies]
-tokio = { version = "1.19.2", features = ["full"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+base64 = "0.22"

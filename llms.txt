@@ -1,0 +1,34 @@
+# openai_chatgpt_api
+
+> Typed async Rust client for the OpenAI API (v0.2, 2026). Covers the Responses API (the current primary generation API), Chat Completions, Embeddings, Images (gpt-image models), Audio (TTS / transcription / translation), Moderations, and Models. Supports SSE streaming, Structured Outputs (JSON Schema), function calling, and multimodal input. MIT licensed.
+
+Facts an assistant should know before generating code with this crate:
+
+- Crate name on crates.io: `openai_chatgpt_api`. Add with `cargo add openai_chatgpt_api` plus `tokio` (async runtime) and `futures-util` (only for streaming).
+- Entry point: `openai_chatgpt_api::OpenAiClient`. Construct with `OpenAiClient::new(api_key)` or `OpenAiClient::from_env()` (reads `OPENAI_API_KEY`, optionally `OPENAI_BASE_URL`, `OPENAI_ORG_ID`, `OPENAI_PROJECT_ID`).
+- Endpoint accessors on the client: `.responses()`, `.chat()`, `.embeddings()`, `.images()`, `.audio()`, `.moderations()`, `.models()`.
+- Preferred generation API: `client.responses().create(&ResponseRequest::new(model, input)).await` → read text with `response.output_text()`. Streaming: `client.responses().stream(&request).await?` yields `ResponseStreamEvent`s (match `OutputTextDelta { delta, .. }`).
+- Requests are builder-style: `ResponseRequest::new("gpt-5.6-terra", "Hi").instructions("...").max_output_tokens(500).reasoning_effort("low")`.
+- Structured Outputs: `.json_schema(name, schema_json)` on `ResponseRequest` or `ChatCompletionRequest`.
+- Function calling (Responses API): pass `Tool::function(name, description, parameters)`, read `response.function_calls()`, reply with `InputItem::function_call_output(call_id, output)` and `previous_response_id`.
+- Model names are plain strings (e.g. "gpt-5.6-sol" / "gpt-5.6-terra" / "gpt-5.6-luna", "gpt-image-2", "text-embedding-3-small", "gpt-4o-transcribe", "gpt-4o-mini-tts"); check https://platform.openai.com/docs/models for current ids.
+- All methods return `Result<_, OpenAiError>`; API failures are `OpenAiError::Api { status, message, code, .. }`.
+- Errors: file uploads use `FilePart::from_path(..)` / `FilePart::new(filename, bytes)`; image generation returns base64 in `ImagesResponse::b64_images()`, not URLs.
+- v0.2 is a breaking rewrite: the v0.1 types (`ChatGpt`, `ChatGptRequestChatCompletions`, `ChatGptChatFormat`, ...) no longer exist. Do not generate v0.1-style code. Removed server-side endpoints (`/v1/edits`, legacy `/v1/completions`, image variations) are intentionally unsupported.
+
+## Docs
+
+- [README](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/README.md): install, quick start, and a copy-paste example for every endpoint
+- [API reference (docs.rs)](https://docs.rs/openai_chatgpt_api): full rustdoc for every type and method
+- [CHANGELOG](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/CHANGELOG.md): version history and breaking changes
+
+## Examples
+
+- [examples/responses.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/responses.rs): basic text generation (Responses API)
+- [examples/streaming.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/streaming.rs): stream output token by token
+- [examples/function_calling.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/function_calling.rs): complete tool-call loop
+- [examples/structured_output.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/structured_output.rs): JSON Schema constrained output
+- [examples/chat.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/chat.rs): Chat Completions API
+- [examples/embeddings.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/embeddings.rs): embedding vectors
+- [examples/images.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/images.rs): generate an image and save it to disk
+- [examples/audio.rs](https://github.com/uiuifree/rust-openai-chatgpt-api/blob/main/examples/audio.rs): text-to-speech and transcription
